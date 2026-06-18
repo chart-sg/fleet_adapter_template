@@ -1,0 +1,51 @@
+name: build_and_test
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+
+jobs:
+  test:
+    name: Minimal Linting Build (${{ matrix.ros_distribution }})
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - ros_distribution: humble
+            ubuntu_distribution: jammy
+          - ros_distribution: jazzy
+            ubuntu_distribution: noble
+          - ros_distribution: rolling
+            ubuntu_distribution: noble
+
+    container:
+      image: osrf/ros:${{ matrix.ros_distribution }}-desktop-${{ matrix.ubuntu_distribution }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        shell: bash
+        run: |
+          apt-get update
+          apt-get install -y \
+            python3-pytest \
+            python3-colcon-common-extensions
+
+      - name: Build workspace
+        shell: bash
+        run: |
+          source /opt/ros/${{ matrix.ros_distribution }}/setup.bash
+          colcon build --symlink-install
+
+      - name: Run colcon tests
+        shell: bash
+        run: |
+          source /opt/ros/${{ matrix.ros_distribution }}/setup.bash
+          colcon test --packages-select fleet_adapter_template --event-handlers console_direct+
+          colcon test-result --verbose
