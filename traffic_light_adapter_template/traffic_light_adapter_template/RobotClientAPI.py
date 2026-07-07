@@ -13,15 +13,18 @@
 # limitations under the License.
 
 """
-The RobotAPI class is a wrapper for API calls to the robot. Here users
-are expected to fill up the implementations of functions which will be used
-by the TrafficLightCommandHandle. For example, if your robot has a REST API,
-you will need to make http request calls to the appropriate endpoints within
-these functions.
+Wrapper for API calls to the robot.
+
+Here users are expected to fill up the implementations of functions
+which will be used by the TrafficLightCommandHandle. For example, if
+your robot has a REST API, you will need to make http request calls to
+the appropriate endpoints within these functions.
 """
 
 
 class RobotAPI:
+    """Wrap robot/fleet manager API calls."""
+
     def __init__(self, config: dict):
         self.prefix = config.get('prefix', '')
         self.user = config.get('user', '')
@@ -52,9 +55,12 @@ class RobotAPI:
 
     def pause_at_checkpoint(
             self, robot_name: str, checkpoint: int) -> bool:
-        """Stop the robot AT the given checkpoint of the active path.
+        """
+        Stop the robot AT the given checkpoint of the active path.
+
         The robot may continue moving toward the checkpoint and decelerate
-        to stop there."""
+        to stop there.
+        """
         # ------------------------ #
         # IMPLEMENT YOUR CODE HERE #
         # ------------------------ #
@@ -62,7 +68,8 @@ class RobotAPI:
 
 
 class RobotUpdateData:
-    """State snapshot for a single robot.
+    """
+    State snapshot for a single robot.
 
     Expected `data` dict shape (from the FM's JSON response):
         robot_name: str                     # robot identifier; defaults to queried name

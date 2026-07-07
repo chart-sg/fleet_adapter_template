@@ -12,23 +12,25 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import sys
 import argparse
-import yaml
-import time
-import threading
 import asyncio
+import sys
+import threading
+import time
+
 import nudged
 
 import rclpy
+from rclpy.duration import Duration
 import rclpy.node
 from rclpy.parameter import Parameter
-from rclpy.duration import Duration
 
 import rmf_adapter
 from rmf_adapter import Adapter
-import rmf_adapter.vehicletraits as traits
 import rmf_adapter.geometry as geometry
+import rmf_adapter.vehicletraits as traits
+
+import yaml
 
 from .RobotClientAPI import RobotAPI
 from .traffic_light_command_handle import TrafficLightCommandHandle
@@ -144,7 +146,7 @@ def main(argv=sys.argv):
 
     adapter.start()
     time.sleep(1.0)
-    
+
     node.get_logger().info(
         f'[{fleet_name}] traffic light adapter started '
         f'with {len(handles)} robot(s)')
@@ -202,6 +204,7 @@ def update_robot(handle):
     except Exception as err:
         handle.logger.error(
             f'[{handle.robot_name}] update loop error: {err}')
+
 
 if __name__ == '__main__':
     main(sys.argv)

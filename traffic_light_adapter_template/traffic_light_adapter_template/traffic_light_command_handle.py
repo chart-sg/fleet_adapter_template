@@ -21,7 +21,8 @@ from .RobotClientAPI import RobotAPI
 
 
 class TrafficLightCommandHandle:
-    """One instance per robot. Lifetime managed by `fleet_adapter.py`.
+    """
+    One instance per robot. Lifetime managed by `fleet_adapter.py`.
 
     Three callbacks are passed to `Adapter.add_easy_traffic_light(...)`:
       - traffic_light_cb : fires once with the EasyTrafficLight object.
@@ -49,7 +50,7 @@ class TrafficLightCommandHandle:
         self._cached_path = None   # last-seen deduped path (what RMF sees)
         self._cached_last_cp = -1
 
-        self._deduped_to_raw = {} # maps RMF indices to robot indices
+        self._deduped_to_raw = {}  # maps RMF indices to robot indices
 
         self._last_error_logged = None
 
@@ -80,7 +81,7 @@ class TrafficLightCommandHandle:
     # Callbacks passed to Adapter.add_easy_traffic_light
     # ==================================================================
     def traffic_light_cb(self, ez_traffic_light):
-        """Fired once by RMF when the traffic light is ready."""
+        """Receive the traffic light handle once RMF is ready."""
         self.logger.info(
             f'[{self.robot_name}] traffic light handle ready')
         self._handler = ez_traffic_light
@@ -126,7 +127,8 @@ class TrafficLightCommandHandle:
         # one index space for the rest of this method. RMF only ever sees the
         # deduped path (follow_new_path), so the checkpoint must be translated
         # from the incoming path's raw index into the deduped index.
-        data.current_path, raw_to_deduped, self._deduped_to_raw = self._dedupe_path(data.current_path)
+        data.current_path, raw_to_deduped, self._deduped_to_raw = (
+            self._dedupe_path(data.current_path))
         if 0 <= data.last_completed_checkpoint < len(raw_to_deduped):
             data.last_completed_checkpoint = (
                 raw_to_deduped[data.last_completed_checkpoint])
@@ -260,9 +262,11 @@ class TrafficLightCommandHandle:
     # RMF call wrappers
     # ==================================================================
     def _dedupe_path(self, path):
-        """Drop consecutive coincident robot waypoints. Returns the deduped
-        path and a map from robot-reported waypoint indices to deduped indices
-        and vice versa.
+        """
+        Drop consecutive coincident robot waypoints.
+
+        Returns the deduped path and a map from robot-reported waypoint
+        indices to deduped indices and vice versa.
         """
         deduped = []
         raw_to_deduped = []
@@ -306,7 +310,8 @@ class TrafficLightCommandHandle:
         self._handler.follow_new_path(rmf_waypoints)
 
     def _handle_moving(self, last_cp, rmf_pose):
-        """Ask RMF about the slot ahead via moving_from().
+        """
+        Ask RMF about the slot ahead via moving_from().
 
         Called both when the robot is moving and when RMF has paused us
         mid-segment. moving_from() is the only call that re-checks the
@@ -481,6 +486,7 @@ class TrafficLightCommandHandle:
         x, y = tf.transform([pos[0], pos[1]])
         return [x, y, pos[2] + tf.get_rotation()]
 
+
 # =================================================================────
 # Module-level helpers
 # =================================================================────
@@ -491,7 +497,8 @@ def _close(a, b, tol=1e-3):
 
 
 def _same_pose(a, b, tol=1e-3):
-    """True if poses a and b coincide in x/y/yaw within tol.
+    """
+    Return True if poses a and b coincide in x/y/yaw within tol.
 
     a and b are [x, y, yaw] sequences. yaw uses the same tol as x/y and
     is compared without angle wraparound, matching the rest of this module.
@@ -502,7 +509,7 @@ def _same_pose(a, b, tol=1e-3):
 
 
 def _waypoints_equal(a, b):
-    """True if two waypoint lists describe the same path."""
+    """Return True if two waypoint lists describe the same path."""
     if a is None or b is None:
         return a is b
     if len(a) != len(b):
