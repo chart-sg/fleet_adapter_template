@@ -76,7 +76,8 @@ class RobotUpdateData:
         position: [float, float, float]     # current pose [x, y, yaw] in robot frame
         map_name: str                       # name of the map the robot is on
         current_path: list[dict]            # path the FM is executing; [] when idle
-        last_completed_checkpoint: int      # index of last reached wp; -1 if none yet
+        last_completed_checkpoint: int      # index of last reached wp in current_path;
+                                            # -1 if none yet
         is_moving: bool                     # true while the robot is actively moving
         battery_soc: float                  # battery state of charge, 0.0–1.0
         error: str | None                   # fault string; None when operating normally
