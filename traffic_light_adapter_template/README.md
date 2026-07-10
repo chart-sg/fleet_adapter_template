@@ -51,6 +51,24 @@ def get_data(self, robot_name):
 
 Alternatively, if your robotic fleet offers a websocket port for communication or allows for messages to be exchanged over ROS 1/2, then these functions can be implemented using those protocols respectively.
 
+### Expected Input Format for `current_path`
+
+`current_path`'s dict uses [rmf_adapter.Waypoint](https://github.com/open-rmf/rmf_ros2/blob/main/rmf_fleet_adapter/include/rmf_fleet_adapter/agv/Waypoint.hpp) .
+
+``` yaml
+current_path = [
+                    {
+                        "map_name": "L1",            # map this waypoint is on
+                        "x": 10.0,                # position in robot frame
+                        "y": -5.0,
+                        "yaw": 0.0,                  # radians; optional, default 0.0
+                        "yield": True,               # optional, default True — RMF may pause the robot here
+                        "mandatory_delay": 0.0,      # optional, default 0.0 s — expected dwell at this waypoint
+                    },
+                    ...
+                ]
+```
+
 ## Step 2: Update config.yaml
 
 The `config.yaml` file contains the parameters for setting up the fleet adapter. There are three broad sections to this file:
