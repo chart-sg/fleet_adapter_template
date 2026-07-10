@@ -4,8 +4,7 @@
   <name>traffic_light_adapter_template</name>
   <version>0.0.0</version>
   <description>A template for an RMF Traffic Light fleet adapter</description>
-  <maintainer email="Loke_Ji_Xian@cgh.com.sg">Ji Xian</maintainer>
-  <maintainer email="Alis_Lin@cgh.com.sg">Alis</maintainer>
+  <maintainer email="garybey@intrinsic.ai">Bey Hao Yun</maintainer>
   <license>Apache License 2.0</license>
 
   <exec_depend>launch_xml</exec_depend>
