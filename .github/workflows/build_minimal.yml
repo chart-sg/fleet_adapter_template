@@ -47,5 +47,5 @@ jobs:
         shell: bash
         run: |
           source /opt/ros/${{ matrix.ros_distribution }}/setup.bash
-          colcon test --packages-select fleet_adapter_template --event-handlers console_direct+
+          colcon test --packages-select fleet_adapter_template traffic_light_adapter_template --event-handlers console_direct+
           colcon test-result --verbose

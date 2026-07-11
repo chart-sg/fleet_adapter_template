@@ -1,0 +1,39 @@
+# FLEET CONFIG =================================================================
+# RMF Traffic Light Fleet parameters
+
+rmf_fleet:
+  name: "tinyRobot"
+  limits:
+    linear: [0.5, 0.75]            # [max_velocity_m_s, max_accel_m_s2]
+    angular: [0.6, 2.0]            # [max_velocity_rad_s, max_accel_rad_s2]
+  profile:
+    footprint: 0.3                 # circle radius (m)
+    vicinity: 0.5                  # circle radius for traffic vicinity (m)
+  # Each entry can carry per-robot config (e.g. charger, dispenser),
+  # like in rmf_demos. Empty dict means defaults.
+  robots:
+    tinyRobot1: {}
+
+  # How often (Hz) to poll the robot's fleet manager for state.
+  robot_state_update_frequency: 2.0
+
+# FLEET MANAGER CONFIG =========================================================
+# Connection details for your robot's native fleet manager.
+
+fleet_manager:
+  prefix: "http://127.0.0.1:8080"
+  user: "some_user"
+  password: "some_password"
+
+
+# CONVERSIONS =============================================================
+# For conversions between Robot and RMF coordinate systems.
+
+conversions:
+  reference_coordinates:
+    L1:
+      rmf:   [[0.0, 0.0], [10.0, 0.0], [10.0, 5.0], [0.0, 5.0]]
+      robot: [[0.0, 0.0], [10.0, 0.0], [10.0, 5.0], [0.0, 5.0]]
+    L2:
+      rmf:   [[0.0, 0.0], [10.0, 0.0], [10.0, 5.0], [0.0, 5.0]]
+      robot: [[0.0, 0.0], [10.0, 0.0], [10.0, 5.0], [0.0, 5.0]]
