@@ -29,6 +29,7 @@ setup(
         'pydantic',
         'requests>=2.25',
         'pyyaml',
+        'nudged',
     ],
     zip_safe=True,
     maintainer='Bey Hao Yun',
